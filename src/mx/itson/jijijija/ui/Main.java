@@ -4,6 +4,10 @@
  */
 package mx.itson.jijijija.ui;
 
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+import mx.itson.jijijija.entidades.Divisa;
+
 /**
  *
  * @author Christian
@@ -26,22 +30,75 @@ public class Main extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblDivisas = new javax.swing.JTable();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
+        });
+
+        tblDivisas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Nombre", "Pais de origen", "Abreviacion", "Precio en USD"
+            }
+        ));
+        jScrollPane1.setViewportView(tblDivisas);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+       
+        cargarTabla();
+        
+    }//GEN-LAST:event_formWindowActivated
+
+    private void cargarTabla(){
+        
+        try{
+            
+            DefaultTableModel modelo = (DefaultTableModel) tblDivisas.getModel();
+            modelo.setRowCount(0);
+            List<Divisa> div = Divisa.obtenerTodos();
+
+            for(Divisa d : div){
+
+                modelo.addRow(new Object[] {d.getNombre(), d.getPaisOrigen(), d.getAbreviacion(), d.getPrecioEnUsd()});
+
+            }
+            
+        }catch(Exception ex){
+            
+            System.err.println("Ocurrio un error: " + ex.getMessage());
+            
+        }
+        
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -78,5 +135,7 @@ public class Main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tblDivisas;
     // End of variables declaration//GEN-END:variables
 }

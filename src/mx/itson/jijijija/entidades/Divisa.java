@@ -76,7 +76,7 @@ public class Divisa {
             
             Connection conexion = Conexion.obtener();
             Statement statement = conexion.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT idDivisa, nombre, paisOrigen, abreviacion, precionEnUsd FROM alumno");
+            ResultSet resultSet = statement.executeQuery("SELECT idDivisa, nombre, paisOrigen, abreviacion, precioEnUsd FROM divisa");
             
             while(resultSet.next() == true){
                 
@@ -86,7 +86,7 @@ public class Divisa {
                 divisa.setNombre(resultSet.getString(2));
                 divisa.setPaisOrigen(resultSet.getString(3));
                 divisa.setAbreviacion(resultSet.getString(4));
-                divisa.setPrecioEnUsd(resultSet.getInt(5));
+                divisa.setPrecioEnUsd(resultSet.getFloat(5));
                 
                 divisas.add(divisa);
                 
