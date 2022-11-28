@@ -79,7 +79,7 @@
               <Table columnCount="4" rowCount="4">
                 <Column editable="true" title="Nombre" type="java.lang.Object"/>
                 <Column editable="true" title="Pais de origen" type="java.lang.Object"/>
-                <Column editable="true" title="Abreviacion" type="java.lang.Object"/>
+                <Column editable="true" title="Codigo ISO" type="java.lang.Object"/>
                 <Column editable="true" title="Precio en USD" type="java.lang.Object"/>
               </Table>
             </Property>

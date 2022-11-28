@@ -53,7 +53,7 @@ public class Main extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Nombre", "Pais de origen", "Abreviacion", "Precio en USD"
+                "Nombre", "Pais de origen", "Codigo ISO", "Precio en USD"
             }
         ));
         jScrollPane1.setViewportView(tblDivisas);
