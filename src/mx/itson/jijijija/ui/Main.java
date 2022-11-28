@@ -32,8 +32,13 @@ public class Main extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         tblDivisas = new javax.swing.JTable();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        btnAgregar = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Divisas");
+        setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowActivated(java.awt.event.WindowEvent evt) {
                 formWindowActivated(evt);
@@ -53,6 +58,20 @@ public class Main extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tblDivisas);
 
+        jMenu1.setText("Opciones ");
+
+        btnAgregar.setText("Agregar");
+        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarActionPerformed(evt);
+            }
+        });
+        jMenu1.add(btnAgregar);
+
+        jMenuBar1.add(jMenu1);
+
+        setJMenuBar(jMenuBar1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -64,7 +83,7 @@ public class Main extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
@@ -77,6 +96,17 @@ public class Main extends javax.swing.JFrame {
         
     }//GEN-LAST:event_formWindowActivated
 
+    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+       
+        new Agregar(this, true).setVisible(true);
+        
+        cargarTabla();
+        
+    }//GEN-LAST:event_btnAgregarActionPerformed
+
+    /**
+     * Sirve para imprimir la tabla de la base de datos a la tabla que vera el usuiario
+     */
     private void cargarTabla(){
         
         try{
@@ -87,7 +117,7 @@ public class Main extends javax.swing.JFrame {
 
             for(Divisa d : div){
 
-                modelo.addRow(new Object[] {d.getNombre(), d.getPaisOrigen(), d.getAbreviacion(), d.getPrecioEnUsd()});
+                modelo.addRow(new Object[] {d.getNombre(), d.getPaisOrigen(), d.getAbreviacion(), String.format("%1.5f", d.getPrecioEnUsd())});
 
             }
             
@@ -135,6 +165,9 @@ public class Main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem btnAgregar;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblDivisas;
     // End of variables declaration//GEN-END:variables

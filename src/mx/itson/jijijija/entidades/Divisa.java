@@ -111,19 +111,19 @@ public class Divisa {
      * @param precioEnUsd El precio en dolares estadounidenses de la divisa
      * @return Retotorna un parametro de tipo boolean para verificar mas adelante si tuvo exito al pasar los datos a la base de datos
      */
-    public boolean guardar(String nombre, String paisOrigen, String abreviacion, String precioEnUsd){
+    public boolean guardar(String nombre, String paisOrigen, String abreviacion, float precioEnUsd){
 
         boolean resultado = false;
         
         try{
             
             Connection conexion = Conexion.obtener();
-            String consulta = "INSERT INTO alumno (nombre, paisOrigen, abreviacion, precioEnUsd) VALUES (?, ?, ?, ?)";
+            String consulta = "INSERT INTO divisa (nombre, paisOrigen, abreviacion, precioEnUsd) VALUES (?, ?, ?, ?)";
             PreparedStatement statement = conexion.prepareStatement(consulta);
             statement.setString(1, nombre);
             statement.setString(2, paisOrigen);
             statement.setString(3, abreviacion);
-            statement.setString(4, precioEnUsd);
+            statement.setFloat(4, precioEnUsd);
             statement.execute();
             
             resultado = statement.getUpdateCount() == 1;
