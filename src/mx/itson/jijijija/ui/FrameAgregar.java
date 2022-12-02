@@ -125,10 +125,14 @@ public class FrameAgregar extends javax.swing.JDialog {
             if(funco){
 
                JOptionPane.showMessageDialog(this, "El registro fue exitoso", "Guardado", JOptionPane.INFORMATION_MESSAGE);
+               
+               dispose();
 
             }else{
 
                 JOptionPane.showMessageDialog(this, "El registro tuvo un error", "No guardado", JOptionPane.ERROR_MESSAGE);
+                
+                dispose();
 
             }
 
