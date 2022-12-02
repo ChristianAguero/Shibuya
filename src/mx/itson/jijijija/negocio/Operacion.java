@@ -10,4 +10,6 @@ package mx.itson.jijijija.negocio;
  */
 public class Operacion {
     
+    
+    
 }

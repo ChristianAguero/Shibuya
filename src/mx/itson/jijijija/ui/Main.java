@@ -35,6 +35,8 @@ public class Main extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         btnAgregar = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
+        btnPrecios = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Divisas");
@@ -47,13 +49,13 @@ public class Main extends javax.swing.JFrame {
 
         tblDivisas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Nombre", "Pais de origen", "Codigo ISO", "Precio en USD"
+                "ID", "Nombre", "Pais de origen", "Codigo ISO", "Precio en USD"
             }
         ));
         jScrollPane1.setViewportView(tblDivisas);
@@ -69,6 +71,18 @@ public class Main extends javax.swing.JFrame {
         jMenu1.add(btnAgregar);
 
         jMenuBar1.add(jMenu1);
+
+        jMenu2.setText("Operaciones");
+
+        btnPrecios.setText("Ver Precios");
+        btnPrecios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPreciosActionPerformed(evt);
+            }
+        });
+        jMenu2.add(btnPrecios);
+
+        jMenuBar1.add(jMenu2);
 
         setJMenuBar(jMenuBar1);
 
@@ -98,11 +112,17 @@ public class Main extends javax.swing.JFrame {
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
        
-        new Agregar(this, true).setVisible(true);
+        new FrameAgregar(this, true).setVisible(true);
         
         cargarTabla();
         
     }//GEN-LAST:event_btnAgregarActionPerformed
+
+    private void btnPreciosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPreciosActionPerformed
+        
+        new FrameMostrarPrecio(this, true).setVisible(true);
+        
+    }//GEN-LAST:event_btnPreciosActionPerformed
 
     /**
      * Sirve para imprimir la tabla de la base de datos a la tabla que vera el usuiario
@@ -117,7 +137,7 @@ public class Main extends javax.swing.JFrame {
 
             for(Divisa d : div){
 
-                modelo.addRow(new Object[] {d.getNombre(), d.getPaisOrigen(), d.getAbreviacion(), String.format("%1.5f", d.getPrecioEnUsd())});
+                modelo.addRow(new Object[] {d.getIdDivisa(), d.getNombre(), d.getPaisOrigen(), d.getAbreviacion(), String.format("%1.5f", d.getPrecioEnUsd())});
 
             }
             
@@ -166,7 +186,9 @@ public class Main extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem btnAgregar;
+    private javax.swing.JMenuItem btnPrecios;
     private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblDivisas;

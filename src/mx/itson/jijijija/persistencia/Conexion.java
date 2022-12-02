@@ -23,7 +23,7 @@ public class Conexion {
         
         try{
             
-            conexion = DriverManager.getConnection("jdbc:mysql://localhost/jijijijadb?user=root&password=");
+            conexion = DriverManager.getConnection("jdbc:mysql://localhost/jijijijadb?user=root&password=21agosto");
             
         }catch(Exception ex){
             
