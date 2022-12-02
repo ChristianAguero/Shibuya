@@ -149,6 +149,11 @@ public class Divisa {
 
     }
     
+    /**
+     * Sirve para buscar el valor en USD de una divisa por su codigo ISO
+     * @param abreviatura El codigo ISO de la divisa
+     * @return El precio ebn USD de la divisa
+     */
     public static float obtenerPorAbreviatura(String abreviatura){
         
         float div  = 0;

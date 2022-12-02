@@ -113,7 +113,7 @@ public class FrameMostrarPrecio extends javax.swing.JDialog {
     private void btnMostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMostrarActionPerformed
         
         float valor = 0;
-        String divisaNom = "";
+        String divisaNom;
         
         try{
             

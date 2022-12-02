@@ -18,6 +18,12 @@ import mx.itson.jijijija.persistencia.Conexion;
  */
 public class Operacion {
     
+    /**
+     * Convierte la divisa seleccionada en las demas divisas
+     * @param divisaNom El codigo ISO de la moneda seleccionada
+     * @param valor El monto que se quiere convertir a las demas monedas 
+     * @return Una lista con todos los valores convertidos, y sus respepctivosd codigos ISO
+     */
     public static List<Divisa> obtenerPrecios(String divisaNom, float valor){
         
         float div = Divisa.obtenerPorAbreviatura(divisaNom);
