@@ -19,6 +19,8 @@ public class Main extends javax.swing.JFrame {
      */
     public Main() {
         initComponents();
+        
+        tblDivisas.removeColumn(tblDivisas.getColumnModel().getColumn(0));
     }
 
     /**
@@ -137,7 +139,7 @@ public class Main extends javax.swing.JFrame {
 
             for(Divisa d : div){
 
-                modelo.addRow(new Object[] {d.getIdDivisa(), d.getNombre(), d.getPaisOrigen(), d.getAbreviacion(), String.format("%1.5f", d.getPrecioEnUsd())});
+                modelo.addRow(new Object[] {d.getIdDivisa(), d.getNombre(), d.getPaisOrigen(), d.getAbreviacion(), String.format("$%1.5f", d.getPrecioEnUsd())});
 
             }
             

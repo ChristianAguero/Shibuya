@@ -6,7 +6,9 @@ package mx.itson.jijijija.ui;
 
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import mx.itson.jijijija.entidades.Divisa;
+import mx.itson.jijijija.negocio.Operacion;
 
 /**
  *
@@ -81,13 +83,11 @@ public class FrameMostrarPrecio extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 458, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(cboDivisas, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(95, 95, 95)
-                        .addComponent(txtValor))
+                    .addComponent(btnMostrar, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnMostrar)))
+                        .addComponent(txtValor)
+                        .addGap(95, 95, 95)
+                        .addComponent(cboDivisas, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -112,7 +112,8 @@ public class FrameMostrarPrecio extends javax.swing.JDialog {
 
     private void btnMostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMostrarActionPerformed
         
-        int valor = 0;
+        float valor = 0;
+        String divisaNom = "";
         
         try{
             
@@ -127,8 +128,19 @@ public class FrameMostrarPrecio extends javax.swing.JDialog {
         if(valor >= 0){
             
             try{
+                
+                DefaultTableModel modelo = (DefaultTableModel) tblMostrar.getModel();
+            modelo.setRowCount(0);
 
-                String divisa = cboDivisas.getSelectedItem().toString();
+                 divisaNom = cboDivisas.getSelectedItem().toString();
+                 
+                 List<Divisa> precios = Operacion.obtenerPrecios(divisaNom, valor);
+                 
+                 for(Divisa d : precios){
+
+                modelo.addRow(new Object[] {d.getAbreviacion(), String.format("$%,1.2f", d.getPrecio())});
+
+            }
 
             }catch(Exception ex){
 

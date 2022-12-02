@@ -23,6 +23,15 @@ public class Divisa {
     private String paisOrigen;
     private String abreviacion;
     private float precioEnUsd;
+    private float precio;
+
+    public float getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(float precio) {
+        this.precio = precio;
+    }
 
     public int getIdDivisa() {
         return idDivisa;
@@ -138,6 +147,34 @@ public class Divisa {
         
         return resultado;
 
+    }
+    
+    public static float obtenerPorAbreviatura(String abreviatura){
+        
+        float div  = 0;
+        
+        try{
+            
+            Connection conexion = Conexion.obtener();
+            PreparedStatement statement = conexion.prepareStatement("SELECT precioEnUsd FROM divisa WHERE abreviacion = ?");
+            statement.setString(1, abreviatura);
+            
+            ResultSet resultSet = statement.executeQuery();
+            
+            while(resultSet.next() == true){
+            
+                div = resultSet.getFloat(1);
+               
+            }
+            
+        }catch(Exception ex){
+            
+            System.err.println("Ocurrio un error: " + ex.getMessage());
+            
+        }
+        
+        return div;
+        
     }
     
 }
