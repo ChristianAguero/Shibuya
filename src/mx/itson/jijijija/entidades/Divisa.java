@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import mx.itson.jijijija.persistencia.Conexion;
 
 /**
@@ -179,6 +180,129 @@ public class Divisa {
         }
         
         return div;
+        
+    }
+    
+    /**
+     * Con este metodo eliminamos un registro en la divisa
+     * @param idDivisa El id de la divisa que se quiere eliminar
+     */
+ 
+     public void eliminar (int idDivisa){
+        
+        boolean resultado = false;
+        
+        String[] options = {"Si", "No"};
+        int x = JOptionPane.showOptionDialog(null, "El registro sera eliminado ¿Esta seguro de esto?", "Atencion", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+        
+        if(x == 0){
+
+            try{
+
+                Connection conexion = Conexion.obtener();
+                String consulta = "DELETE FROM divisa WHERE idDivisa = ?";
+                PreparedStatement statement = conexion.prepareStatement(consulta);
+                statement.setInt(1, idDivisa);
+                statement.execute();
+
+                resultado = statement.getUpdateCount() == 1;
+                conexion.close();
+
+            }catch(Exception ex){
+
+                System.err.println("Ocurrio un error: " + ex.getMessage());
+
+            }
+            
+        }
+        
+        if(resultado){
+            
+            JOptionPane.showMessageDialog(null, "El registro se elimiino exitosamente", "Eliminado", JOptionPane.INFORMATION_MESSAGE);
+            
+        }else{
+            
+            JOptionPane.showMessageDialog(null, "El registro no se ha podido eliminar", "Error", JOptionPane.ERROR_MESSAGE);
+            
+        }
+        
+    }
+     
+
+     /**
+     * Con este metodo editamos un registro en la divisa
+     * @param idDivisa El id de la divisa que se quiere editar
+     * @param nombre El nombre de la divisa a editar
+     * @param paisOrigen El pais de origen de la divisa a editar
+     * @param abreviacion La abreviacion de moneda del pais de la divisa a editar
+     * @param precioEnUsd El precio en dolares de la divisa a editar
+     * @return un tipo boolean que nos dice si se completo la eliminacion de la divisa
+     */
+
+      public boolean editar (int idDivisa, String nombre, String paisOrigen, String abreviacion, double precioEnUsd){
+        
+        boolean resultado = false;
+        
+        try{
+            
+            Connection conexion = Conexion.obtener();
+            String consulta = "UPDATE divisa SET nombre = ?, paisOrigen = ?, abreviacion = ?, precioEnUsd = ? WHERE idDivisa = ?";
+            PreparedStatement statement = conexion.prepareStatement(consulta);
+            statement.setString(1, nombre);
+            statement.setString(2, paisOrigen);
+            statement.setString(3, abreviacion);
+            statement.setDouble(4, precioEnUsd);
+            statement.setInt(5, idDivisa);
+            statement.execute();
+            
+            resultado = statement.getUpdateCount() == 1;
+            conexion.close();
+            
+        }catch(Exception ex){
+            
+            System.err.println("Ocurrio un error: " + ex.getMessage());
+            
+        }
+        
+        return resultado;
+      }
+    
+     /**
+     * Con este metodo obtenemos una divisa por su id
+     * @param idDivisa El id de la divisa que se quiere buscar 
+     * @return los datos de la divisa obtenida
+     */
+    public static Divisa obtenerPorId(int idDivisa){
+        
+        Divisa divisa = new Divisa();
+        
+        try{
+        
+            Connection conexion = Conexion.obtener();
+            PreparedStatement statement = conexion.prepareStatement("SELECT idDivisa, nombre, paisOrigen, abreviacion, precioEnUsd FROM divisa WHERE idDivisa = ?");
+            statement.setInt(1, idDivisa);
+            
+            ResultSet resultSet = statement.executeQuery();
+            
+            while(resultSet.next() == true){
+                
+                divisa.setIdDivisa(resultSet.getInt(1));
+                divisa.setNombre(resultSet.getString(2));
+                divisa.setPaisOrigen(resultSet.getString(3));
+                divisa.setAbreviacion(resultSet.getString(4)); 
+                divisa.setPrecioEnUsd(resultSet.getFloat(5));
+                
+            }
+            
+            conexion.close();
+            
+        }catch(Exception ex){
+            
+            System.err.println("Ocurrio un error: " + ex.getMessage());
+            
+        }
+        
+        return divisa;
         
     }
     

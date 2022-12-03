@@ -37,6 +37,8 @@ public class Main extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         btnAgregar = new javax.swing.JMenuItem();
+        btnEditar = new javax.swing.JMenuItem();
+        btnEliminar = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         btnPrecios = new javax.swing.JMenuItem();
 
@@ -71,6 +73,22 @@ public class Main extends javax.swing.JFrame {
             }
         });
         jMenu1.add(btnAgregar);
+
+        btnEditar.setText("Editar");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
+        jMenu1.add(btnEditar);
+
+        btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
+        jMenu1.add(btnEliminar);
 
         jMenuBar1.add(jMenu1);
 
@@ -114,7 +132,7 @@ public class Main extends javax.swing.JFrame {
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
        
-        new FrameAgregar(this, true).setVisible(true);
+        new FrameAgregar(this, true, 0).setVisible(true);
         
         cargarTabla();
         
@@ -125,6 +143,28 @@ public class Main extends javax.swing.JFrame {
         new FrameMostrarPrecio(this, true).setVisible(true);
         
     }//GEN-LAST:event_btnPreciosActionPerformed
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+       
+        int renglon = tblDivisas.getSelectedRow();
+       int idAlumno = Integer.parseInt( tblDivisas.getModel().getValueAt(renglon, 0).toString());
+        
+        new FrameAgregar(this, true, idAlumno).setVisible(true);
+        
+        cargarTabla();
+        
+    }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        
+        int renglon = tblDivisas.getSelectedRow();
+       int idDivisa = Integer.parseInt( tblDivisas.getModel().getValueAt(renglon, 0).toString());
+       
+       new Divisa().eliminar(idDivisa);
+       
+       cargarTabla();
+        
+    }//GEN-LAST:event_btnEliminarActionPerformed
 
     /**
      * Sirve para imprimir la tabla de la base de datos a la tabla que vera el usuiario
@@ -188,6 +228,8 @@ public class Main extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem btnAgregar;
+    private javax.swing.JMenuItem btnEditar;
+    private javax.swing.JMenuItem btnEliminar;
     private javax.swing.JMenuItem btnPrecios;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;

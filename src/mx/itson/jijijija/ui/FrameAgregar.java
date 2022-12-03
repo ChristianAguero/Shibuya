@@ -13,12 +13,28 @@ import mx.itson.jijijija.entidades.Divisa;
  */
 public class FrameAgregar extends javax.swing.JDialog {
 
+    int idDivisa;
+    
     /**
      * Creates new form Agregar
      */
-    public FrameAgregar(java.awt.Frame parent, boolean modal) {
+    public FrameAgregar(java.awt.Frame parent, boolean modal, int idDivisa) {
         super(parent, modal);
         initComponents();
+        
+        this.idDivisa = idDivisa;
+        
+        if(idDivisa != 0){
+            
+            Divisa divisa = Divisa.obtenerPorId(this.idDivisa);
+            
+            txtNombre.setText(divisa.getNombre());
+            txtPais.setText(divisa.getPaisOrigen());
+            txtAbreviacion.setText(divisa.getAbreviacion());
+            txtDolares.setText(String.format("%1.5f", divisa.getPrecioEnUsd()));
+            
+        }
+        
     }
 
     /**
@@ -54,7 +70,7 @@ public class FrameAgregar extends javax.swing.JDialog {
 
         jLabel5.setText("Valor de la moneda en dolares");
 
-        btnAgregar.setText("Sgregar");
+        btnAgregar.setText("Agregar");
         btnAgregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAgregarActionPerformed(evt);
@@ -120,7 +136,9 @@ public class FrameAgregar extends javax.swing.JDialog {
             String abreviacion = txtAbreviacion.getText().toUpperCase();
             float precioEnDolares = Float.parseFloat(txtDolares.getText());
 
-            boolean funco = new Divisa().guardar(nombre, paisOrigen, abreviacion, precioEnDolares);
+            boolean funco = this.idDivisa == 0 ?
+                    new Divisa().guardar(nombre, paisOrigen, abreviacion, precioEnDolares):
+                    new Divisa().editar(idDivisa, nombre, paisOrigen, abreviacion, precioEnDolares);
 
             if(funco){
 
@@ -175,7 +193,7 @@ public class FrameAgregar extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                FrameAgregar dialog = new FrameAgregar(new javax.swing.JFrame(), true);
+                FrameAgregar dialog = new FrameAgregar(new javax.swing.JFrame(), true, 0);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
