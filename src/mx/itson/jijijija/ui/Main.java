@@ -146,23 +146,39 @@ public class Main extends javax.swing.JFrame {
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
        
-        int renglon = tblDivisas.getSelectedRow();
-       int idAlumno = Integer.parseInt( tblDivisas.getModel().getValueAt(renglon, 0).toString());
+        try{
         
-        new FrameAgregar(this, true, idAlumno).setVisible(true);
+            int renglon = tblDivisas.getSelectedRow();
+           int idAlumno = Integer.parseInt( tblDivisas.getModel().getValueAt(renglon, 0).toString());
+
+            new FrameAgregar(this, true, idAlumno).setVisible(true);
+
+            cargarTabla();
         
-        cargarTabla();
+        }catch(Exception ex){
+            
+            System.err.println("Ocurrio un error: " + ex.getMessage());
+            
+        }
         
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         
-        int renglon = tblDivisas.getSelectedRow();
-       int idDivisa = Integer.parseInt( tblDivisas.getModel().getValueAt(renglon, 0).toString());
+        try{
+        
+            int renglon = tblDivisas.getSelectedRow();
+           int idDivisa = Integer.parseInt( tblDivisas.getModel().getValueAt(renglon, 0).toString());
+
+           new Divisa().eliminar(idDivisa);
+
+           cargarTabla();
        
-       new Divisa().eliminar(idDivisa);
-       
-       cargarTabla();
+       }catch(Exception ex){
+            
+            System.err.println("Ocurrio un error: " + ex.getMessage());
+            
+        }
         
     }//GEN-LAST:event_btnEliminarActionPerformed
 
