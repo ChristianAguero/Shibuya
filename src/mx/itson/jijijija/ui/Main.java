@@ -76,7 +76,7 @@ public class Main extends javax.swing.JFrame {
 
         jMenu2.setText("Operaciones");
 
-        btnPrecios.setText("Ver Precios");
+        btnPrecios.setText("Conversion");
         btnPrecios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnPreciosActionPerformed(evt);

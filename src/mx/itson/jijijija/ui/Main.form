@@ -26,7 +26,7 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="btnPrecios">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Ver Precios"/>
+                <Property name="text" type="java.lang.String" value="Conversion"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPreciosActionPerformed"/>
