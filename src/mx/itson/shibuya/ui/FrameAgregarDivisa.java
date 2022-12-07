@@ -11,7 +11,7 @@ import mx.itson.shibuya.entidades.Divisa;
  *
  * @author shiri
  */
-public class FrameAgregar extends javax.swing.JDialog {
+public class FrameAgregarDivisa extends javax.swing.JDialog {
 
     int idDivisa;
     
@@ -21,7 +21,7 @@ public class FrameAgregar extends javax.swing.JDialog {
      * @param modal
      * @param idDivisa
      */
-    public FrameAgregar(java.awt.Frame parent, boolean modal, int idDivisa) {
+    public FrameAgregarDivisa(java.awt.Frame parent, boolean modal, int idDivisa) {
         super(parent, modal);
         initComponents();
         
@@ -171,21 +171,23 @@ public class FrameAgregar extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrameAgregar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrameAgregarDivisa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrameAgregar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrameAgregarDivisa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrameAgregar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrameAgregarDivisa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrameAgregar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrameAgregarDivisa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                FrameAgregar dialog = new FrameAgregar(new javax.swing.JFrame(), true, 0);
+                FrameAgregarDivisa dialog = new FrameAgregarDivisa(new javax.swing.JFrame(), true, 0);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

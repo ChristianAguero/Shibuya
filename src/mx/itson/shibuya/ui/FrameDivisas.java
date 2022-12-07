@@ -112,7 +112,7 @@ public class FrameDivisas extends javax.swing.JFrame {
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
 
-        new FrameAgregar(this, true, 0).setVisible(true);
+        new FrameAgregarDivisa(this, true, 0).setVisible(true);
 
         cargarTabla();
     }//GEN-LAST:event_btnAgregarActionPerformed
@@ -124,7 +124,7 @@ public class FrameDivisas extends javax.swing.JFrame {
             int renglon = tblDivisas.getSelectedRow();
             int idAlumno = Integer.parseInt( tblDivisas.getModel().getValueAt(renglon, 0).toString());
 
-            new FrameAgregar(this, true, idAlumno).setVisible(true);
+            new FrameAgregarDivisa(this, true, idAlumno).setVisible(true);
 
             cargarTabla();
 

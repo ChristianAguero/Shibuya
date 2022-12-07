@@ -6,7 +6,7 @@ package mx.itson.shibuya.ui;
 
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
-import mx.itson.shibuya.entidades.Divisa;
+import mx.itson.shibuya.entidades.*;
 
 /**
  *
@@ -21,6 +21,7 @@ public class Main extends javax.swing.JFrame {
         initComponents();
         
         tblDivisas.removeColumn(tblDivisas.getColumnModel().getColumn(0));
+        tblDivisas.removeColumn(tblDivisas.getColumnModel().getColumn(1));
     }
 
     /**
@@ -53,13 +54,13 @@ public class Main extends javax.swing.JFrame {
 
         tblDivisas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "ID", "Nombre", "Codigo ISO", "Precio en USD"
+                "Pais", "IDDivisa", "Pais", "ISO Pais", "Nombre de la divisa", "ISO Divisa", "Precio en USD"
             }
         ));
         jScrollPane1.setViewportView(tblDivisas);
@@ -132,7 +133,7 @@ public class Main extends javax.swing.JFrame {
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
        
-        new FrameAgregar(this, true, 0).setVisible(true);
+        new FrameAgregarDivisa(this, true, 0).setVisible(true);
         
         cargarTabla();
         
@@ -151,7 +152,7 @@ public class Main extends javax.swing.JFrame {
             int renglon = tblDivisas.getSelectedRow();
            int idPais = Integer.parseInt( tblDivisas.getModel().getValueAt(renglon, 0).toString());
 
-            new FrameAgregar(this, true, idPais).setVisible(true);
+            new FrameAgregarDivisa(this, true, idPais).setVisible(true);
 
             cargarTabla();
         
