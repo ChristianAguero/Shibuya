@@ -41,12 +41,10 @@
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="jLabel2" pref="970" max="32767" attributes="0"/>
                           <Component id="txtNombre" max="32767" attributes="0"/>
-                          <Component id="jLabel3" max="32767" attributes="0"/>
-                          <Component id="txtPais" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
-                  <Component id="txtDolares" max="32767" attributes="0"/>
+                  <Component id="txtSimbolo" max="32767" attributes="0"/>
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       <Component id="btnAgregar" min="-2" max="-2" attributes="0"/>
@@ -64,17 +62,13 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="txtNombre" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="txtPais" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
               <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="txtAbreviacion" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="txtDolares" min="-2" max="-2" attributes="0"/>
+              <Component id="txtSimbolo" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="btnAgregar" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="32767" attributes="0"/>
@@ -90,13 +84,6 @@
     </Component>
     <Component class="javax.swing.JTextField" name="txtNombre">
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel3">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Pais de origen"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JTextField" name="txtPais">
-    </Component>
     <Component class="javax.swing.JLabel" name="jLabel4">
       <Properties>
         <Property name="text" type="java.lang.String" value="Abreviacion (Codigo ISO 3 letras)"/>
@@ -106,10 +93,10 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel5">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Valor de la moneda en dolares"/>
+        <Property name="text" type="java.lang.String" value="Simbolo"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="txtDolares">
+    <Component class="javax.swing.JTextField" name="txtSimbolo">
     </Component>
     <Component class="javax.swing.JButton" name="btnAgregar">
       <Properties>

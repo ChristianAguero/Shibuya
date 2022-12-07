@@ -2,15 +2,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package mx.itson.jijijija.negocio;
+package mx.itson.shibuya.negocio;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import mx.itson.jijijija.entidades.Divisa;
-import mx.itson.jijijija.persistencia.Conexion;
+import mx.itson.shibuya.entidades.Divisa;
+import mx.itson.shibuya.persistencia.Conexion;
 
 /**
  *
@@ -26,7 +26,7 @@ public class Operacion {
      */
     public static List<Divisa> obtenerPrecios(String divisaNom, float valor){
         
-        float div = Divisa.obtenerPorAbreviatura(divisaNom);
+        //float div = Divisa.obtenerPorAbreviatura(divisaNom);
         
         List<Divisa> divisas = new ArrayList<>();
         
@@ -41,7 +41,7 @@ public class Operacion {
                 Divisa divisa = new Divisa();
                 
                 divisa.setAbreviacion(resultSet.getString(1));
-                divisa.setPrecio((div * valor) / resultSet.getFloat(2));
+                //divisa.setPrecio((div * valor) / resultSet.getFloat(2));
                 
                 divisas.add(divisa);
                 

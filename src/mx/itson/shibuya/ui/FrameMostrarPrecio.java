@@ -2,13 +2,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
  */
-package mx.itson.jijijija.ui;
+package mx.itson.shibuya.ui;
 
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import mx.itson.jijijija.entidades.Divisa;
-import mx.itson.jijijija.negocio.Operacion;
+import mx.itson.shibuya.entidades.Divisa;
+import mx.itson.shibuya.negocio.Operacion;
 
 /**
  *

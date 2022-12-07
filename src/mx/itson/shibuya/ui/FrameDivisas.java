@@ -2,25 +2,23 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package mx.itson.jijijija.ui;
+package mx.itson.shibuya.ui;
 
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
-import mx.itson.jijijija.entidades.Divisa;
+import mx.itson.shibuya.entidades.Divisa;
 
 /**
  *
  * @author Christian
  */
-public class Main extends javax.swing.JFrame {
+public class FrameDivisas extends javax.swing.JFrame {
 
     /**
-     * Creates new form Main
+     * Creates new form FrameDivisas2
      */
-    public Main() {
+    public FrameDivisas() {
         initComponents();
-        
-        tblDivisas.removeColumn(tblDivisas.getColumnModel().getColumn(0));
     }
 
     /**
@@ -32,39 +30,39 @@ public class Main extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tblDivisas = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
+        jMenu2 = new javax.swing.JMenu();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblDivisas = new javax.swing.JTable();
+        jMenuBar2 = new javax.swing.JMenuBar();
+        jMenu3 = new javax.swing.JMenu();
         btnAgregar = new javax.swing.JMenuItem();
         btnEditar = new javax.swing.JMenuItem();
         btnEliminar = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
-        btnPrecios = new javax.swing.JMenuItem();
+
+        jMenu1.setText("File");
+        jMenuBar1.add(jMenu1);
+
+        jMenu2.setText("Edit");
+        jMenuBar1.add(jMenu2);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Divisas");
-        setResizable(false);
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowActivated(java.awt.event.WindowEvent evt) {
-                formWindowActivated(evt);
-            }
-        });
 
         tblDivisas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "ID", "Nombre", "Pais de origen", "Codigo ISO", "Precio en USD"
+                "ID", "Nombre", "Codigo ISO", "Precio en USD"
             }
         ));
         jScrollPane1.setViewportView(tblDivisas);
 
-        jMenu1.setText("Opciones ");
+        jMenu3.setText("Editar");
 
         btnAgregar.setText("Agregar");
         btnAgregar.addActionListener(new java.awt.event.ActionListener() {
@@ -72,7 +70,7 @@ public class Main extends javax.swing.JFrame {
                 btnAgregarActionPerformed(evt);
             }
         });
-        jMenu1.add(btnAgregar);
+        jMenu3.add(btnAgregar);
 
         btnEditar.setText("Editar");
         btnEditar.addActionListener(new java.awt.event.ActionListener() {
@@ -80,7 +78,7 @@ public class Main extends javax.swing.JFrame {
                 btnEditarActionPerformed(evt);
             }
         });
-        jMenu1.add(btnEditar);
+        jMenu3.add(btnEditar);
 
         btnEliminar.setText("Eliminar");
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
@@ -88,23 +86,11 @@ public class Main extends javax.swing.JFrame {
                 btnEliminarActionPerformed(evt);
             }
         });
-        jMenu1.add(btnEliminar);
+        jMenu3.add(btnEliminar);
 
-        jMenuBar1.add(jMenu1);
+        jMenuBar2.add(jMenu3);
 
-        jMenu2.setText("Operaciones");
-
-        btnPrecios.setText("Conversion");
-        btnPrecios.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnPreciosActionPerformed(evt);
-            }
-        });
-        jMenu2.add(btnPrecios);
-
-        jMenuBar1.add(jMenu2);
-
-        setJMenuBar(jMenuBar1);
+        setJMenuBar(jMenuBar2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -124,62 +110,47 @@ public class Main extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
-       
-        cargarTabla();
-        
-    }//GEN-LAST:event_formWindowActivated
-
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-       
+
         new FrameAgregar(this, true, 0).setVisible(true);
-        
+
         cargarTabla();
-        
     }//GEN-LAST:event_btnAgregarActionPerformed
 
-    private void btnPreciosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPreciosActionPerformed
-        
-        new FrameMostrarPrecio(this, true).setVisible(true);
-        
-    }//GEN-LAST:event_btnPreciosActionPerformed
-
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-       
+
         try{
-        
+
             int renglon = tblDivisas.getSelectedRow();
-           int idAlumno = Integer.parseInt( tblDivisas.getModel().getValueAt(renglon, 0).toString());
+            int idAlumno = Integer.parseInt( tblDivisas.getModel().getValueAt(renglon, 0).toString());
 
             new FrameAgregar(this, true, idAlumno).setVisible(true);
 
             cargarTabla();
-        
+
         }catch(Exception ex){
-            
+
             System.err.println("Ocurrio un error: " + ex.getMessage());
-            
+
         }
-        
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        
+
         try{
-        
+
             int renglon = tblDivisas.getSelectedRow();
-           int idDivisa = Integer.parseInt( tblDivisas.getModel().getValueAt(renglon, 0).toString());
+            int idDivisa = Integer.parseInt( tblDivisas.getModel().getValueAt(renglon, 0).toString());
 
-           new Divisa().eliminar(idDivisa);
+            new Divisa().eliminar(idDivisa);
 
-           cargarTabla();
-       
-       }catch(Exception ex){
-            
+            cargarTabla();
+
+        }catch(Exception ex){
+
             System.err.println("Ocurrio un error: " + ex.getMessage());
-            
+
         }
-        
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     /**
@@ -195,7 +166,7 @@ public class Main extends javax.swing.JFrame {
 
             for(Divisa d : div){
 
-                modelo.addRow(new Object[] {d.getIdDivisa(), d.getNombre(), d.getPaisOrigen(), d.getAbreviacion(), String.format("$%1.5f", d.getPrecioEnUsd())});
+                modelo.addRow(new Object[] {d.getIdDivisa(), d.getNombre(), d.getAbreviacion(), /*String.format("$%1.5f", d.getPrecioEnUsd())*/ d.getSimbolo()});
 
             }
             
@@ -224,20 +195,21 @@ public class Main extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrameDivisas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrameDivisas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrameDivisas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrameDivisas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Main().setVisible(true);
+                new FrameDivisas().setVisible(true);
             }
         });
     }
@@ -246,10 +218,11 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenuItem btnAgregar;
     private javax.swing.JMenuItem btnEditar;
     private javax.swing.JMenuItem btnEliminar;
-    private javax.swing.JMenuItem btnPrecios;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblDivisas;
     // End of variables declaration//GEN-END:variables

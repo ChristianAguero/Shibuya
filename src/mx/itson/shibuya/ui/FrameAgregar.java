@@ -2,10 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
  */
-package mx.itson.jijijija.ui;
+package mx.itson.shibuya.ui;
 
 import javax.swing.JOptionPane;
-import mx.itson.jijijija.entidades.Divisa;
+import mx.itson.shibuya.entidades.Divisa;
 
 /**
  *
@@ -17,6 +17,9 @@ public class FrameAgregar extends javax.swing.JDialog {
     
     /**
      * Creates new form Agregar
+     * @param parent
+     * @param modal
+     * @param idDivisa
      */
     public FrameAgregar(java.awt.Frame parent, boolean modal, int idDivisa) {
         super(parent, modal);
@@ -29,9 +32,9 @@ public class FrameAgregar extends javax.swing.JDialog {
             Divisa divisa = Divisa.obtenerPorId(this.idDivisa);
             
             txtNombre.setText(divisa.getNombre());
-            txtPais.setText(divisa.getPaisOrigen());
             txtAbreviacion.setText(divisa.getAbreviacion());
-            txtDolares.setText(String.format("%1.5f", divisa.getPrecioEnUsd()));
+            txtSimbolo.setText(divisa.getSimbolo());
+            txtSimbolo.setText(/*String.format("%1.5f", divisa.getPrecioEnUsd())*/ divisa.getSimbolo());
             
         }
         
@@ -49,12 +52,10 @@ public class FrameAgregar extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         txtNombre = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
-        txtPais = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         txtAbreviacion = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        txtDolares = new javax.swing.JTextField();
+        txtSimbolo = new javax.swing.JTextField();
         btnAgregar = new javax.swing.JButton();
 
         jLabel1.setText("jLabel1");
@@ -64,11 +65,9 @@ public class FrameAgregar extends javax.swing.JDialog {
 
         jLabel2.setText("Nombre de la divisa");
 
-        jLabel3.setText("Pais de origen");
-
         jLabel4.setText("Abreviacion (Codigo ISO 3 letras)");
 
-        jLabel5.setText("Valor de la moneda en dolares");
+        jLabel5.setText("Simbolo");
 
         btnAgregar.setText("Agregar");
         btnAgregar.addActionListener(new java.awt.event.ActionListener() {
@@ -90,11 +89,9 @@ public class FrameAgregar extends javax.swing.JDialog {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 970, Short.MAX_VALUE)
-                            .addComponent(txtNombre)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtPais))
+                            .addComponent(txtNombre))
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(txtDolares)
+                    .addComponent(txtSimbolo)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btnAgregar)))
@@ -108,17 +105,13 @@ public class FrameAgregar extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtPais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtAbreviacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtDolares, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtSimbolo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnAgregar)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -132,13 +125,12 @@ public class FrameAgregar extends javax.swing.JDialog {
         try{
 
             String nombre = txtNombre.getText();
-            String paisOrigen = txtPais.getText();
+            String simbolo = txtSimbolo.getText();
             String abreviacion = txtAbreviacion.getText().toUpperCase();
-            float precioEnDolares = Float.parseFloat(txtDolares.getText());
 
             boolean funco = this.idDivisa == 0 ?
-                    new Divisa().guardar(nombre, paisOrigen, abreviacion, precioEnDolares):
-                    new Divisa().editar(idDivisa, nombre, paisOrigen, abreviacion, precioEnDolares);
+                    new Divisa().guardar(nombre, abreviacion, simbolo):
+                    new Divisa().editar(idDivisa, nombre, abreviacion, simbolo);
 
             if(funco){
 
@@ -209,12 +201,10 @@ public class FrameAgregar extends javax.swing.JDialog {
     private javax.swing.JButton btnAgregar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JTextField txtAbreviacion;
-    private javax.swing.JTextField txtDolares;
     private javax.swing.JTextField txtNombre;
-    private javax.swing.JTextField txtPais;
+    private javax.swing.JTextField txtSimbolo;
     // End of variables declaration//GEN-END:variables
 }
