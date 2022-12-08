@@ -19,6 +19,8 @@ public class FrameDivisas extends javax.swing.JFrame {
      */
     public FrameDivisas() {
         initComponents();
+        
+         tblDivisas.removeColumn(tblDivisas.getColumnModel().getColumn(0));
     }
 
     /**
@@ -47,7 +49,12 @@ public class FrameDivisas extends javax.swing.JFrame {
         jMenu2.setText("Edit");
         jMenuBar1.add(jMenu2);
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         tblDivisas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -96,15 +103,17 @@ public class FrameDivisas extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
@@ -115,6 +124,7 @@ public class FrameDivisas extends javax.swing.JFrame {
         new FrameAgregarDivisa(this, true, 0).setVisible(true);
 
         cargarTabla();
+        
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
@@ -153,6 +163,12 @@ public class FrameDivisas extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        
+        cargarTabla();
+        
+    }//GEN-LAST:event_formWindowOpened
+
     /**
      * Sirve para imprimir la tabla de la base de datos a la tabla que vera el usuiario
      */
@@ -165,9 +181,17 @@ public class FrameDivisas extends javax.swing.JFrame {
             List<Divisa> div = Divisa.obtenerTodos();
 
             for(Divisa d : div){
-
-                modelo.addRow(new Object[] {d.getIdDivisa(), d.getNombre(), d.getAbreviacion(), /*String.format("$%1.5f", d.getPrecioEnUsd())*/ d.getSimbolo()});
-
+                
+                if(d.getPrecioEnUsd() == 0){
+                
+                    modelo.addRow(new Object[] {d.getIdDivisa(), d.getNombre(), d.getAbreviacion(), d.getSimbolo() + "0.00"});    
+                
+                }else{
+                    
+                    modelo.addRow(new Object[] {d.getIdDivisa(), d.getNombre(), d.getAbreviacion(), d.getSimbolo() + String.format("%1.6f", d.getPrecioEnUsd())});    
+                    
+                }
+                
             }
             
         }catch(Exception ex){

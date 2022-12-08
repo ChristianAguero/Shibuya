@@ -20,8 +20,8 @@ public class Main extends javax.swing.JFrame {
     public Main() {
         initComponents();
         
-        tblDivisas.removeColumn(tblDivisas.getColumnModel().getColumn(0));
-        tblDivisas.removeColumn(tblDivisas.getColumnModel().getColumn(1));
+        tblPaises.removeColumn(tblPaises.getColumnModel().getColumn(0));
+        tblPaises.removeColumn(tblPaises.getColumnModel().getColumn(0));
     }
 
     /**
@@ -34,12 +34,13 @@ public class Main extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblDivisas = new javax.swing.JTable();
+        tblPaises = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         btnAgregar = new javax.swing.JMenuItem();
         btnEditar = new javax.swing.JMenuItem();
         btnEliminar = new javax.swing.JMenuItem();
+        btnVerDivisas = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         btnPrecios = new javax.swing.JMenuItem();
 
@@ -52,7 +53,7 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-        tblDivisas.setModel(new javax.swing.table.DefaultTableModel(
+        tblPaises.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null},
@@ -60,10 +61,10 @@ public class Main extends javax.swing.JFrame {
                 {null, null, null, null, null, null, null}
             },
             new String [] {
-                "Pais", "IDDivisa", "Pais", "ISO Pais", "Nombre de la divisa", "ISO Divisa", "Precio en USD"
+                "IDPais", "IDDivisa", "Pais", "ISO Pais", "Nombre de la divisa", "ISO Divisa", "Precio en USD"
             }
         ));
-        jScrollPane1.setViewportView(tblDivisas);
+        jScrollPane1.setViewportView(tblPaises);
 
         jMenu1.setText("Opciones ");
 
@@ -91,6 +92,14 @@ public class Main extends javax.swing.JFrame {
         });
         jMenu1.add(btnEliminar);
 
+        btnVerDivisas.setText("Ver divisas");
+        btnVerDivisas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVerDivisasActionPerformed(evt);
+            }
+        });
+        jMenu1.add(btnVerDivisas);
+
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Operaciones");
@@ -112,14 +121,16 @@ public class Main extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -133,7 +144,7 @@ public class Main extends javax.swing.JFrame {
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
        
-        new FrameAgregarDivisa(this, true, 0).setVisible(true);
+        new FrameAgregarPais(this, true, 0).setVisible(true);
         
         cargarTabla();
         
@@ -149,10 +160,10 @@ public class Main extends javax.swing.JFrame {
        
         try{
         
-            int renglon = tblDivisas.getSelectedRow();
-           int idPais = Integer.parseInt( tblDivisas.getModel().getValueAt(renglon, 0).toString());
+            int renglon = tblPaises.getSelectedRow();
+           int idPais = Integer.parseInt( tblPaises.getModel().getValueAt(renglon, 0).toString());
 
-            new FrameAgregarDivisa(this, true, idPais).setVisible(true);
+            new FrameAgregarPais(this, true, idPais).setVisible(true);
 
             cargarTabla();
         
@@ -168,10 +179,10 @@ public class Main extends javax.swing.JFrame {
         
         try{
         
-            int renglon = tblDivisas.getSelectedRow();
-           int idPais = Integer.parseInt( tblDivisas.getModel().getValueAt(renglon, 0).toString());
+            int renglon = tblPaises.getSelectedRow();
+           int idPais = Integer.parseInt( tblPaises.getModel().getValueAt(renglon, 0).toString());
 
-           new Divisa().eliminar(idPais);
+           new Pais().eliminar(idPais);
 
            cargarTabla();
        
@@ -183,6 +194,12 @@ public class Main extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnEliminarActionPerformed
 
+    private void btnVerDivisasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerDivisasActionPerformed
+        
+        new FrameDivisas().setVisible(true);
+        
+    }//GEN-LAST:event_btnVerDivisasActionPerformed
+
     /**
      * Sirve para imprimir la tabla de la base de datos a la tabla que vera el usuiario
      */
@@ -190,13 +207,21 @@ public class Main extends javax.swing.JFrame {
         
         try{
             
-            DefaultTableModel modelo = (DefaultTableModel) tblDivisas.getModel();
+            DefaultTableModel modelo = (DefaultTableModel) tblPaises.getModel();
             modelo.setRowCount(0);
-            List<Divisa> div = Divisa.obtenerTodos();
+            List<Pais> pais = Pais.obtenerTodos();
 
-            for(Divisa d : div){
+            for(Pais p : pais){
 
-                modelo.addRow(new Object[] {d.getIdDivisa(), d.getNombre(), d.getAbreviacion(), /*String.format("$%1.5f", d.getPrecioEnUsd())*/ d.getSimbolo()});
+                if(p.getSimbolo() == null) {
+                    
+                    modelo.addRow(new Object[] {p.getIdPais(), p.getIdDivisa(), p.getNombre(), p.getAbreviacion(), p.getNombreDivisa(), p.getAbreviacionDivisa()});
+                    
+                } else {
+                    
+                    modelo.addRow(new Object[] {p.getIdPais(), p.getIdDivisa(), p.getNombre(), p.getAbreviacion(), p.getNombreDivisa(), p.getAbreviacionDivisa(), p.getSimbolo() + String.format("%1.6f", p.getPrecioEnUsd())});
+                    
+                }
 
             }
             
@@ -248,10 +273,11 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenuItem btnEditar;
     private javax.swing.JMenuItem btnEliminar;
     private javax.swing.JMenuItem btnPrecios;
+    private javax.swing.JMenuItem btnVerDivisas;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tblDivisas;
+    private javax.swing.JTable tblPaises;
     // End of variables declaration//GEN-END:variables
 }

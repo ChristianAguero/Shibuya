@@ -4,18 +4,35 @@
  */
 package mx.itson.shibuya.ui;
 
+import java.util.List;
+import javax.swing.JOptionPane;
+import mx.itson.shibuya.entidades.Divisa;
+import mx.itson.shibuya.entidades.Pais;
+
 /**
  *
  * @author Christian
  */
 public class FrameAgregarPais extends javax.swing.JDialog {
+    
+    int idPais;
 
     /**
      * Creates new form FrameAgregarPais
      */
-    public FrameAgregarPais(java.awt.Frame parent, boolean modal) {
+    public FrameAgregarPais(java.awt.Frame parent, boolean modal, int idPais) {
         super(parent, modal);
         initComponents();
+        
+        this.idPais = idPais;
+        
+        if(idPais != 0){
+            
+            Pais pais = Pais.obtenerPorId(this.idPais);
+            
+            txtNombre.setText(pais.getNombre());
+            txtIso.setText(pais.getAbreviacion());
+        }
     }
 
     /**
@@ -27,22 +44,126 @@ public class FrameAgregarPais extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
+        txtNombre = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        txtIso = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        cboDivisas = new javax.swing.JComboBox<>();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        jLabel1.setText("Nombre");
+
+        jLabel2.setText("Codigo ISO");
+
+        jButton1.setText("Agregar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setText("Seleccionar la divisa del pais");
+
+        cboDivisas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtNombre)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtIso)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton1))
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 960, Short.MAX_VALUE)
+                    .addComponent(cboDivisas, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtIso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cboDivisas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+       
+         try{
+
+            String nombre = txtNombre.getText();
+            String abreviacion = txtIso.getText().toUpperCase();
+            String divisaNom = cboDivisas.getSelectedItem().toString();
+
+            boolean funco = this.idPais == 0 ?
+                    new Pais().guardar(nombre, abreviacion):
+                    new Pais().editar(nombre, abreviacion, divisaNom);
+
+            if(funco){
+
+               JOptionPane.showMessageDialog(this, "El registro fue exitoso", "Guardado", JOptionPane.INFORMATION_MESSAGE);
+               
+               dispose();
+
+            }else{
+
+                JOptionPane.showMessageDialog(this, "El registro tuvo un error", "No guardado", JOptionPane.ERROR_MESSAGE);
+                
+                dispose();
+
+            }
+
+        }catch(Exception ex){
+
+            System.err.println("Ocurrio un error: " + ex.getMessage());
+
+        }
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    public void cargarComboBox(){
+        
+        List<Divisa> div = Divisa.obtenerTodos();
+        
+        try{
+            
+            for(Divisa d : div){
+            
+                cboDivisas.addItem(d.getAbreviacion());
+            
+            }
+            
+        }catch(Exception ex){
+            
+            System.err.println("Ocurrio un error: " + ex.getMessage());
+            
+        }
+        
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -73,7 +194,7 @@ public class FrameAgregarPais extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                FrameAgregarPais dialog = new FrameAgregarPais(new javax.swing.JFrame(), true);
+                FrameAgregarPais dialog = new FrameAgregarPais(new javax.swing.JFrame(), true, 0);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -86,5 +207,12 @@ public class FrameAgregarPais extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> cboDivisas;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JTextField txtIso;
+    private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
 }

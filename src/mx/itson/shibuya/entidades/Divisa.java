@@ -96,6 +96,7 @@ public class Divisa {
                 divisa.setNombre(resultSet.getString(2));
                 divisa.setAbreviacion(resultSet.getString(3));
                 divisa.setSimbolo(resultSet.getString(4));
+                divisa.setPrecioEnUsd(resultSet.getFloat(5));
                 
                 divisas.add(divisa);
                 
@@ -119,18 +120,19 @@ public class Divisa {
      * @param simbolo El simbolo de la divisa que se quiere guardar
      * @return Retotorna un parametro de tipo boolean para verificar mas adelante si tuvo exito al pasar los datos a la base de datos
      */
-    public boolean guardar(String nombre, String abreviacion, String simbolo){
+    public boolean guardar(String nombre, String abreviacion, String simbolo, float precioEnUsd){
 
         boolean resultado = false;
         
         try{
             
             Connection conexion = Conexion.obtener();
-            String consulta = "INSERT INTO divisa (nombre, abreviacion, simbolo) VALUES (?, ?, ?)";
+            String consulta = "INSERT INTO divisa (nombre, abreviacion, simbolo, precioEnUsd) VALUES (?, ?, ?, ?)";
             PreparedStatement statement = conexion.prepareStatement(consulta);
             statement.setString(1, nombre);
             statement.setString(2, abreviacion);
             statement.setString(3, simbolo);
+            statement.setFloat(4, precioEnUsd);
             statement.execute();
             
             resultado = statement.getUpdateCount() == 1;
@@ -152,7 +154,7 @@ public class Divisa {
      * @param abreviatura El codigo ISO de la divisa
      * @return El precio ebn USD de la divisa
      */
-    /*public static float obtenerPorAbreviatura(String abreviatura){
+    public static float obtenerPorAbreviatura(String abreviatura){
         
         float div  = 0;
         
@@ -178,7 +180,7 @@ public class Divisa {
         
         return div;
         
-    }*/
+    }
     
     /**
      * Con este metodo eliminamos un registro en la divisa
@@ -235,19 +237,20 @@ public class Divisa {
      * @return un tipo boolean que nos dice si se completo la eliminacion de la divisa
      */
 
-      public boolean editar (int idDivisa, String nombre, String abreviacion, String simbolo){
+      public boolean editar (int idDivisa, String nombre, String abreviacion, String simbolo, float precioEnUsd){
         
         boolean resultado = false;
         
         try{
             
             Connection conexion = Conexion.obtener();
-            String consulta = "UPDATE divisa SET nombre = ?, abreviacion = ?, simbolo = ? WHERE idDivisa = ?";
+            String consulta = "UPDATE divisa SET nombre = ?, abreviacion = ?, simbolo = ?, precioEnUsd = ? WHERE idDivisa = ?";
             PreparedStatement statement = conexion.prepareStatement(consulta);
             statement.setString(1, nombre);
             statement.setString(2, abreviacion);
             statement.setString(3, simbolo);
-            statement.setInt(4, idDivisa);
+            statement.setFloat(4, precioEnUsd);
+            statement.setInt(5, idDivisa);
             statement.execute();
             
             resultado = statement.getUpdateCount() == 1;
@@ -274,7 +277,7 @@ public class Divisa {
         try{
         
             Connection conexion = Conexion.obtener();
-            PreparedStatement statement = conexion.prepareStatement("SELECT idDivisa, nombre, abreviacion, simbolo FROM divisa WHERE idDivisa = ?");
+            PreparedStatement statement = conexion.prepareStatement("SELECT idDivisa, nombre, abreviacion, simbolo, precioEnUsd FROM divisa WHERE idDivisa = ?");
             statement.setInt(1, idDivisa);
             
             ResultSet resultSet = statement.executeQuery();
@@ -285,6 +288,7 @@ public class Divisa {
                 divisa.setNombre(resultSet.getString(2));
                 divisa.setAbreviacion(resultSet.getString(3)); 
                 divisa.setSimbolo(resultSet.getString(4)); 
+                divisa.setPrecioEnUsd(resultSet.getFloat(5));
                 
             }
             

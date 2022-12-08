@@ -34,7 +34,7 @@ public class FrameAgregarDivisa extends javax.swing.JDialog {
             txtNombre.setText(divisa.getNombre());
             txtAbreviacion.setText(divisa.getAbreviacion());
             txtSimbolo.setText(divisa.getSimbolo());
-            txtSimbolo.setText(/*String.format("%1.5f", divisa.getPrecioEnUsd())*/ divisa.getSimbolo());
+            txtUsd.setText(String.format("%1.6f", divisa.getPrecioEnUsd()));
             
         }
         
@@ -57,6 +57,8 @@ public class FrameAgregarDivisa extends javax.swing.JDialog {
         jLabel5 = new javax.swing.JLabel();
         txtSimbolo = new javax.swing.JTextField();
         btnAgregar = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        txtUsd = new javax.swing.JTextField();
 
         jLabel1.setText("jLabel1");
 
@@ -76,6 +78,8 @@ public class FrameAgregarDivisa extends javax.swing.JDialog {
             }
         });
 
+        jLabel3.setText("Precio en USD");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -83,18 +87,21 @@ public class FrameAgregarDivisa extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 970, Short.MAX_VALUE)
                     .addComponent(txtAbreviacion)
                     .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 970, Short.MAX_VALUE)
-                            .addComponent(txtNombre))
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(txtSimbolo)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnAgregar)))
+                        .addComponent(btnAgregar))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 970, Short.MAX_VALUE)
+                                .addComponent(txtNombre))
+                            .addComponent(jLabel3))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(txtUsd))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -113,8 +120,12 @@ public class FrameAgregarDivisa extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtSimbolo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtUsd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnAgregar)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -127,10 +138,11 @@ public class FrameAgregarDivisa extends javax.swing.JDialog {
             String nombre = txtNombre.getText();
             String simbolo = txtSimbolo.getText();
             String abreviacion = txtAbreviacion.getText().toUpperCase();
+            float precioEnUsd = Float.parseFloat(txtUsd.getText());
 
             boolean funco = this.idDivisa == 0 ?
-                    new Divisa().guardar(nombre, abreviacion, simbolo):
-                    new Divisa().editar(idDivisa, nombre, abreviacion, simbolo);
+                    new Divisa().guardar(nombre, abreviacion, simbolo, precioEnUsd):
+                    new Divisa().editar(idDivisa, nombre, abreviacion, simbolo, precioEnUsd);
 
             if(funco){
 
@@ -203,10 +215,12 @@ public class FrameAgregarDivisa extends javax.swing.JDialog {
     private javax.swing.JButton btnAgregar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JTextField txtAbreviacion;
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtSimbolo;
+    private javax.swing.JTextField txtUsd;
     // End of variables declaration//GEN-END:variables
 }
