@@ -5,6 +5,7 @@
 package mx.itson.shibuya.negocio;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -26,7 +27,7 @@ public class Operacion {
      */
     public static List<Divisa> obtenerPrecios(String divisaNom, float valor){
         
-        //float div = Divisa.obtenerPorAbreviatura(divisaNom);
+        float div = Divisa.obtenerPorAbreviatura(divisaNom);
         
         List<Divisa> divisas = new ArrayList<>();
         
@@ -41,7 +42,7 @@ public class Operacion {
                 Divisa divisa = new Divisa();
                 
                 divisa.setAbreviacion(resultSet.getString(1));
-                //divisa.setPrecio((div * valor) / resultSet.getFloat(2));
+                divisa.setPrecio((div * valor) / resultSet.getFloat(2));
                 
                 divisas.add(divisa);
                 
@@ -55,6 +56,27 @@ public class Operacion {
         }
         
         return divisas;
+        
+    }
+    
+    public static float obtenerPrecio(String divisaNomUno, String divisaNomDos, float valor){
+        
+        float divUno = Divisa.obtenerPorAbreviatura(divisaNomUno);
+        float divDos = Divisa.obtenerPorAbreviatura(divisaNomDos);
+        
+        float precio = 0;
+        
+        try{
+                
+                precio = ((divUno * valor) / divDos);            
+            
+        }catch(Exception ex){
+            
+            System.err.println("Ocurrio un error: " + ex.getMessage());
+            
+        }
+        
+        return precio;
         
     }
     

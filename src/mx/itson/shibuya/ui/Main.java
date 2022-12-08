@@ -41,8 +41,6 @@ public class Main extends javax.swing.JFrame {
         btnEditar = new javax.swing.JMenuItem();
         btnEliminar = new javax.swing.JMenuItem();
         btnVerDivisas = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
-        btnPrecios = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Divisas");
@@ -102,18 +100,6 @@ public class Main extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
-        jMenu2.setText("Operaciones");
-
-        btnPrecios.setText("Conversion");
-        btnPrecios.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnPreciosActionPerformed(evt);
-            }
-        });
-        jMenu2.add(btnPrecios);
-
-        jMenuBar1.add(jMenu2);
-
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -149,12 +135,6 @@ public class Main extends javax.swing.JFrame {
         cargarTabla();
         
     }//GEN-LAST:event_btnAgregarActionPerformed
-
-    private void btnPreciosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPreciosActionPerformed
-        
-        //new FrameMostrarPrecio(this, true).setVisible(true);
-        
-    }//GEN-LAST:event_btnPreciosActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
        
@@ -213,13 +193,13 @@ public class Main extends javax.swing.JFrame {
 
             for(Pais p : pais){
 
-                if(p.getSimbolo() == null) {
+                if(p.getIdDivisa() == 0) {
                     
-                    modelo.addRow(new Object[] {p.getIdPais(), p.getIdDivisa(), p.getNombre(), p.getAbreviacion(), p.getNombreDivisa(), p.getAbreviacionDivisa()});
+                    modelo.addRow(new Object[] {p.getIdPais(), p.getIdDivisa(), p.getNombre(), p.getAbreviacion(), p.getNombreDivisa(), p.getAbreviacionDivisa(), p.getSimbolo()});
                     
                 } else {
                     
-                    modelo.addRow(new Object[] {p.getIdPais(), p.getIdDivisa(), p.getNombre(), p.getAbreviacion(), p.getNombreDivisa(), p.getAbreviacionDivisa(), p.getSimbolo() + String.format("%1.6f", p.getPrecioEnUsd())});
+                    modelo.addRow(new Object[] {p.getIdPais(), p.getIdDivisa(), p.getNombre(), p.getAbreviacion(), p.getNombreDivisa(), p.getAbreviacionDivisa(), p.getSimbolo() + String.format( "%1.6f", p.getPrecioEnUsd())});
                     
                 }
 
@@ -272,10 +252,8 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenuItem btnAgregar;
     private javax.swing.JMenuItem btnEditar;
     private javax.swing.JMenuItem btnEliminar;
-    private javax.swing.JMenuItem btnPrecios;
     private javax.swing.JMenuItem btnVerDivisas;
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblPaises;

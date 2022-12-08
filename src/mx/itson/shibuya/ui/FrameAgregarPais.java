@@ -24,6 +24,10 @@ public class FrameAgregarPais extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         
+        cboDivisas.removeAllItems();
+        
+        cargarComboBox();
+        
         this.idPais = idPais;
         
         if(idPais != 0){
@@ -66,8 +70,6 @@ public class FrameAgregarPais extends javax.swing.JDialog {
         });
 
         jLabel3.setText("Seleccionar la divisa del pais");
-
-        cboDivisas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -119,8 +121,8 @@ public class FrameAgregarPais extends javax.swing.JDialog {
             String divisaNom = cboDivisas.getSelectedItem().toString();
 
             boolean funco = this.idPais == 0 ?
-                    new Pais().guardar(nombre, abreviacion):
-                    new Pais().editar(nombre, abreviacion, divisaNom);
+                    new Pais().guardar(nombre, abreviacion, divisaNom):
+                    new Pais().editar(nombre, abreviacion, divisaNom, this.idPais);
 
             if(funco){
 

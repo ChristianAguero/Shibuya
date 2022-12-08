@@ -42,6 +42,9 @@ public class FrameDivisas extends javax.swing.JFrame {
         btnAgregar = new javax.swing.JMenuItem();
         btnEditar = new javax.swing.JMenuItem();
         btnEliminar = new javax.swing.JMenuItem();
+        jMenu4 = new javax.swing.JMenu();
+        btnPreciosTodasDivisas = new javax.swing.JMenuItem();
+        btnPreciosDosDivisas = new javax.swing.JMenuItem();
 
         jMenu1.setText("File");
         jMenuBar1.add(jMenu1);
@@ -69,7 +72,7 @@ public class FrameDivisas extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tblDivisas);
 
-        jMenu3.setText("Editar");
+        jMenu3.setText("Opciones");
 
         btnAgregar.setText("Agregar");
         btnAgregar.addActionListener(new java.awt.event.ActionListener() {
@@ -96,6 +99,26 @@ public class FrameDivisas extends javax.swing.JFrame {
         jMenu3.add(btnEliminar);
 
         jMenuBar2.add(jMenu3);
+
+        jMenu4.setText("Operraciones");
+
+        btnPreciosTodasDivisas.setText("Conversion A todas las divisas");
+        btnPreciosTodasDivisas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPreciosTodasDivisasActionPerformed(evt);
+            }
+        });
+        jMenu4.add(btnPreciosTodasDivisas);
+
+        btnPreciosDosDivisas.setText("Conversion una divisa");
+        btnPreciosDosDivisas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPreciosDosDivisasActionPerformed(evt);
+            }
+        });
+        jMenu4.add(btnPreciosDosDivisas);
+
+        jMenuBar2.add(jMenu4);
 
         setJMenuBar(jMenuBar2);
 
@@ -168,6 +191,18 @@ public class FrameDivisas extends javax.swing.JFrame {
         cargarTabla();
         
     }//GEN-LAST:event_formWindowOpened
+
+    private void btnPreciosTodasDivisasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPreciosTodasDivisasActionPerformed
+
+        new FrameMostrarPrecio(this, true).setVisible(true);
+
+    }//GEN-LAST:event_btnPreciosTodasDivisasActionPerformed
+
+    private void btnPreciosDosDivisasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPreciosDosDivisasActionPerformed
+        
+        new FrameConversion(this, true).setVisible(true);
+        
+    }//GEN-LAST:event_btnPreciosDosDivisasActionPerformed
 
     /**
      * Sirve para imprimir la tabla de la base de datos a la tabla que vera el usuiario
@@ -242,9 +277,12 @@ public class FrameDivisas extends javax.swing.JFrame {
     private javax.swing.JMenuItem btnAgregar;
     private javax.swing.JMenuItem btnEditar;
     private javax.swing.JMenuItem btnEliminar;
+    private javax.swing.JMenuItem btnPreciosDosDivisas;
+    private javax.swing.JMenuItem btnPreciosTodasDivisas;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JScrollPane jScrollPane1;

@@ -119,7 +119,8 @@ public class Pais {
                 pais.setAbreviacion(resultSet.getString(4));
                 pais.setNombreDivisa(resultSet.getString(5));
                 pais.setAbreviacionDivisa(resultSet.getString(6));
-                pais.setPrecioEnUsd(resultSet.getFloat(7));
+                pais.setSimbolo(resultSet.getString(7));
+                pais.setPrecioEnUsd(resultSet.getFloat(8));
                                 
                 paises.add(pais);
                 
@@ -142,17 +143,20 @@ public class Pais {
      * @param abreviacion
      * @return 
      */
-    public boolean guardar(String nombre, String abreviacion){
+    public boolean guardar(String nombre, String abreviacion, String divisa){
 
         boolean resultado = false;
         
         try{
+        
+            int idDivisa = obtenerPorAbreviatura(divisa);
             
             Connection conexion = Conexion.obtener();
-            String consulta = "INSERT INTO pais (nombre, iso) VALUES (?, ?)";
+            String consulta = "INSERT INTO pais (nombre, iso, idDivisa) VALUES (?, ?, ?)";
             PreparedStatement statement = conexion.prepareStatement(consulta);
             statement.setString(1, nombre);
             statement.setString(2, abreviacion);
+            statement.setInt(3, idDivisa);
             statement.execute();
             
             resultado = statement.getUpdateCount() == 1;
@@ -261,7 +265,7 @@ public class Pais {
       * @param divisa
       * @return 
       */
-     public boolean editar (String nombre, String abreviacion, String divisa){
+     public boolean editar (String nombre, String abreviacion, String divisa, int idPais){
         
         boolean resultado = false;
         
@@ -274,9 +278,8 @@ public class Pais {
             PreparedStatement statement = conexion.prepareStatement(consulta);
             statement.setString(1, nombre);
             statement.setString(2, abreviacion);
-            statement.setString(3, simbolo);
-            statement.setFloat(4, precioEnUsd);
-            statement.setInt(5, idDivisa);
+            statement.setInt(3, idDivisa);
+            statement.setInt(4, idPais);
             statement.execute();
             
             resultado = statement.getUpdateCount() == 1;
