@@ -22,11 +22,20 @@ public class Pais {
     private int idPais;
     private String nombre;
     private String abreviacion;
+    private String abreviacionDos;
     private int idDivisa;
     private String nombreDivisa;
     private String abreviacionDivisa;
     private String simbolo;
     private float precioEnUsd;
+
+    public String getAbreviacionDos() {
+        return abreviacionDos;
+    }
+
+    public void setAbreviacionDos(String abreviacionDos) {
+        this.abreviacionDos = abreviacionDos;
+    }
 
     public int getIdDivisa() {
         return idDivisa;
@@ -96,7 +105,7 @@ public class Pais {
      * 
      * @return 
      */
-    public static List<Pais> obtenerTodos(){
+    public static List<Pais> obtenerTodos(String idioma){
         
         List<Pais> paises = new ArrayList<>();
         
@@ -104,10 +113,40 @@ public class Pais {
             
             Connection conexion = Conexion.obtener();
             Statement statement = conexion.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT pais.id, divisa.idDivisa, pais.nombre, pais.iso, divisa.nombre, divisa.abreviacion, divisa.simbolo, divisa.precioEnUsd "
-                    + "FROM pais "
-                    + "LEFT JOIN divisa "
-                    + "ON divisa.idDivisa = pais.idDivisa");
+            String spa = """
+                                                         SELECT pais.id, divisa.idDivisa, pais.nombre, pais.iso2, pais.iso3, divisa.nombre, divisa.abreviacion, divisa.simbolo, divisa.precioEnUsd
+                                                         FROM pais
+                                                         LEFT JOIN divisa
+                                                         ON divisa.idDivisa = pais.idDivisa
+                                                         """;
+            String eng = """
+                                                         SELECT pais.id, divisa.idDivisa, pais.name, pais.iso2, pais.iso3, divisa.nombre, divisa.abreviacion, divisa.simbolo, divisa.precioEnUsd
+                                                         FROM pais
+                                                         LEFT JOIN divisa
+                                                         ON divisa.idDivisa = pais.idDivisa
+                                                         """;
+            String fre = """
+                                                         SELECT pais.id, divisa.idDivisa, pais.nom, pais.iso2, pais.iso3, divisa.nombre, divisa.abreviacion, divisa.simbolo, divisa.precioEnUsd
+                                                         FROM pais
+                                                         LEFT JOIN divisa
+                                                         ON divisa.idDivisa = pais.idDivisa
+                                                         """;
+            
+            ResultSet resultSet = null;
+            
+            if(idioma.equalsIgnoreCase("Español")){
+                                                                 
+                resultSet = statement.executeQuery(spa);
+            
+            }else if(idioma.equals("English")){
+                
+                resultSet = statement.executeQuery(eng);
+                
+            }else if(idioma.equals("Français")){
+                
+                resultSet = statement.executeQuery(fre);
+                
+            }
             
             while(resultSet.next() == true){
                 
@@ -117,6 +156,7 @@ public class Pais {
                 pais.setIdDivisa(resultSet.getInt(2));
                 pais.setNombre(resultSet.getString(3));
                 pais.setAbreviacion(resultSet.getString(4));
+                pais.setAbreviacionDos(resultSet.getString(5));
                 pais.setNombreDivisa(resultSet.getString(5));
                 pais.setAbreviacionDivisa(resultSet.getString(6));
                 pais.setSimbolo(resultSet.getString(7));
@@ -149,14 +189,14 @@ public class Pais {
         
         try{
         
-            int idDivisa = obtenerPorAbreviatura(divisa);
+            int idDiv = obtenerPorAbreviatura(divisa);
             
             Connection conexion = Conexion.obtener();
             String consulta = "INSERT INTO pais (nombre, iso, idDivisa) VALUES (?, ?, ?)";
             PreparedStatement statement = conexion.prepareStatement(consulta);
             statement.setString(1, nombre);
             statement.setString(2, abreviacion);
-            statement.setInt(3, idDivisa);
+            statement.setInt(3, idDiv);
             statement.execute();
             
             resultado = statement.getUpdateCount() == 1;
@@ -229,7 +269,7 @@ public class Pais {
         try{
         
             Connection conexion = Conexion.obtener();
-            PreparedStatement statement = conexion.prepareStatement("SELECT pais.id, divisa.idDivisa, pais.nombre, pais.iso "
+            PreparedStatement statement = conexion.prepareStatement("SELECT pais.id, divisa.idDivisa, pais.nombre, pais.iso2, pais.iso3 "
                     + "FROM pais "
                     + "LEFT JOIN divisa "
                     + "ON divisa.idDivisa = pais.idDivisa WHERE pais.id = ?");
@@ -243,6 +283,7 @@ public class Pais {
                 pais.setIdDivisa(resultSet.getInt(2));
                 pais.setNombre(resultSet.getString(3));
                 pais.setAbreviacion(resultSet.getString(4));
+                pais.setAbreviacionDos(resultSet.getString(5));
                 
             }
             
@@ -265,7 +306,7 @@ public class Pais {
       * @param divisa
       * @return 
       */
-     public boolean editar (String nombre, String abreviacion, String divisa, int idPais){
+     public boolean editar (String nombre, String abreviacion, String abreviacionDos, String divisa, int idPais, int telefono){
         
         boolean resultado = false;
         
@@ -274,12 +315,14 @@ public class Pais {
             int idDivisa = obtenerPorAbreviatura(divisa);
             
             Connection conexion = Conexion.obtener();
-            String consulta = "UPDATE pais SET nombre = ?, iso = ?, idDivisa = ? WHERE id = ?";
+            String consulta = "UPDATE pais SET nombre = ?, iso2 = ?, iso3 = ?, idDivisa = ?, codigoTelefono = ? WHERE id = ?";
             PreparedStatement statement = conexion.prepareStatement(consulta);
             statement.setString(1, nombre);
             statement.setString(2, abreviacion);
-            statement.setInt(3, idDivisa);
-            statement.setInt(4, idPais);
+            statement.setString(3, abreviacionDos);
+            statement.setInt(4, idDivisa);
+            statement.setInt(5, telefono);
+            statement.setInt(6, idPais);
             statement.execute();
             
             resultado = statement.getUpdateCount() == 1;

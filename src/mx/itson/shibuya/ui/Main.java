@@ -35,6 +35,7 @@ public class Main extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         tblPaises = new javax.swing.JTable();
+        cboIdioma = new javax.swing.JComboBox<>();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         btnAgregar = new javax.swing.JMenuItem();
@@ -51,6 +52,7 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
+        tblPaises.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
         tblPaises.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null},
@@ -63,6 +65,14 @@ public class Main extends javax.swing.JFrame {
             }
         ));
         jScrollPane1.setViewportView(tblPaises);
+
+        cboIdioma.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Español", "English", "Français" }));
+        cboIdioma.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        cboIdioma.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cboIdiomaItemStateChanged(evt);
+            }
+        });
 
         jMenu1.setText("Opciones ");
 
@@ -108,23 +118,29 @@ public class Main extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(cboIdioma, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1687, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
+                .addComponent(cboIdioma, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
-       
-        cargarTabla();
+
+        cargarTabla("Español");
         
     }//GEN-LAST:event_formWindowActivated
 
@@ -132,7 +148,9 @@ public class Main extends javax.swing.JFrame {
        
         new FrameAgregarPais(this, true, 0).setVisible(true);
         
-        cargarTabla();
+        String idioma = seleccionarComboBox();
+        
+        cargarTabla(idioma);
         
     }//GEN-LAST:event_btnAgregarActionPerformed
 
@@ -145,7 +163,9 @@ public class Main extends javax.swing.JFrame {
 
             new FrameAgregarPais(this, true, idPais).setVisible(true);
 
-            cargarTabla();
+           String idioma = seleccionarComboBox();
+        
+            cargarTabla(idioma);
         
         }catch(Exception ex){
             
@@ -163,8 +183,10 @@ public class Main extends javax.swing.JFrame {
            int idPais = Integer.parseInt( tblPaises.getModel().getValueAt(renglon, 0).toString());
 
            new Pais().eliminar(idPais);
+           
+           String idioma = seleccionarComboBox();
 
-           cargarTabla();
+           cargarTabla(idioma);
        
        }catch(Exception ex){
             
@@ -180,27 +202,35 @@ public class Main extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnVerDivisasActionPerformed
 
+    private void cboIdiomaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboIdiomaItemStateChanged
+        
+        String idioma = seleccionarComboBox();
+        
+        cargarTabla(idioma);
+        
+    }//GEN-LAST:event_cboIdiomaItemStateChanged
+
     /**
      * Sirve para imprimir la tabla de la base de datos a la tabla que vera el usuiario
      */
-    private void cargarTabla(){
+    private void cargarTabla(String idioma){
         
         try{
             
             DefaultTableModel modelo = (DefaultTableModel) tblPaises.getModel();
             modelo.setRowCount(0);
-            List<Pais> pais = Pais.obtenerTodos();
+            List<Pais> pais = Pais.obtenerTodos(idioma);
 
             for(Pais p : pais){
 
                 if(p.getIdDivisa() == 0) {
-                    
-                    modelo.addRow(new Object[] {p.getIdPais(), p.getIdDivisa(), p.getNombre(), p.getAbreviacion(), p.getNombreDivisa(), p.getAbreviacionDivisa(), p.getSimbolo()});
+
+                        modelo.addRow(new Object[] {p.getIdPais(), p.getIdDivisa(), p.getNombre(), p.getAbreviacion(), p.getNombreDivisa(), p.getAbreviacionDivisa(), p.getSimbolo()});
                     
                 } else {
                     
-                    modelo.addRow(new Object[] {p.getIdPais(), p.getIdDivisa(), p.getNombre(), p.getAbreviacion(), p.getNombreDivisa(), p.getAbreviacionDivisa(), p.getSimbolo() + String.format( "%1.6f", p.getPrecioEnUsd())});
-                    
+                        modelo.addRow(new Object[] {p.getIdPais(), p.getIdDivisa(), p.getNombre(), p.getAbreviacion(), p.getNombreDivisa(), p.getAbreviacionDivisa(), p.getSimbolo() + String.format( "%1.6f", p.getPrecioEnUsd())});
+                        
                 }
 
             }
@@ -210,6 +240,14 @@ public class Main extends javax.swing.JFrame {
             System.err.println("Ocurrio un error: " + ex.getMessage());
             
         }
+        
+    }
+    
+    private String seleccionarComboBox(){
+        
+        String idioma = cboIdioma.getSelectedItem().toString();
+        
+        return idioma;
         
     }
     
@@ -253,6 +291,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenuItem btnEditar;
     private javax.swing.JMenuItem btnEliminar;
     private javax.swing.JMenuItem btnVerDivisas;
+    private javax.swing.JComboBox<String> cboIdioma;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;

@@ -35,7 +35,7 @@ public class FrameAgregarPais extends javax.swing.JDialog {
             Pais pais = Pais.obtenerPorId(this.idPais);
             
             txtNombre.setText(pais.getNombre());
-            txtIso.setText(pais.getAbreviacion());
+            txtIsoDos.setText(pais.getAbreviacion());
         }
     }
 
@@ -51,16 +51,20 @@ public class FrameAgregarPais extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         txtNombre = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        txtIso = new javax.swing.JTextField();
+        txtIsoDos = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         cboDivisas = new javax.swing.JComboBox<>();
+        jLabel4 = new javax.swing.JLabel();
+        txtIsoTres = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        txtTelefono = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setText("Nombre");
 
-        jLabel2.setText("Codigo ISO");
+        jLabel2.setText("Codigo ISO2");
 
         jButton1.setText("Agregar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -71,6 +75,10 @@ public class FrameAgregarPais extends javax.swing.JDialog {
 
         jLabel3.setText("Seleccionar la divisa del pais");
 
+        jLabel4.setText("Codigo ISO3");
+
+        jLabel5.setText("Codigo de telefono");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -78,15 +86,19 @@ public class FrameAgregarPais extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtIsoTres)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(txtNombre)
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txtIso)
+                    .addComponent(txtIsoDos)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButton1))
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 960, Short.MAX_VALUE)
-                    .addComponent(cboDivisas, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(cboDivisas, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtTelefono))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -99,11 +111,19 @@ public class FrameAgregarPais extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtIso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtIsoDos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtIsoTres, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cboDivisas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addContainerGap())
@@ -117,12 +137,14 @@ public class FrameAgregarPais extends javax.swing.JDialog {
          try{
 
             String nombre = txtNombre.getText();
-            String abreviacion = txtIso.getText().toUpperCase();
+            String abreviacion = txtIsoDos.getText().toUpperCase();
+            String abreviacionDos = txtIsoTres.getText().toUpperCase();
             String divisaNom = cboDivisas.getSelectedItem().toString();
+            int telefono = Integer.parseInt(txtTelefono.getText());
 
             boolean funco = this.idPais == 0 ?
                     new Pais().guardar(nombre, abreviacion, divisaNom):
-                    new Pais().editar(nombre, abreviacion, divisaNom, this.idPais);
+                    new Pais().editar(nombre, abreviacion, abreviacionDos, divisaNom, this.idPais, telefono);
 
             if(funco){
 
@@ -214,7 +236,11 @@ public class FrameAgregarPais extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JTextField txtIso;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JTextField txtIsoDos;
+    private javax.swing.JTextField txtIsoTres;
     private javax.swing.JTextField txtNombre;
+    private javax.swing.JTextField txtTelefono;
     // End of variables declaration//GEN-END:variables
 }
